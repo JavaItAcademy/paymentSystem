@@ -9,4 +9,5 @@ public interface PaymentService {
     Payment addPayment(Payment p);
     List<Payment> getAllPayments();
     Payment getPaymentById(Long id);
+    boolean confirmPayment(Long id, Integer confirmationCode);
 }

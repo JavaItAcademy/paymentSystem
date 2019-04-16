@@ -3,9 +3,11 @@ package it.academy.paymentSystem.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 @Entity
 public class Payment {
+    public static Random r = new Random();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,6 +15,8 @@ public class Payment {
     private String status;
 
     private BigDecimal amount;
+
+    private Integer confirmationCode;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -40,7 +44,10 @@ public class Payment {
 
         if (amount.remainder(BigDecimal.valueOf(2))
                 .equals(BigDecimal.ZERO)){
-            this.status = "OK";
+
+            this.confirmationCode = r.nextInt(9000) + 1000;
+            System.out.println(confirmationCode);
+            this.status = "AWAITING_CONFIRMATION";
         }
         else {
             this.status = "ERROR";
@@ -85,5 +92,13 @@ public class Payment {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public Integer getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    public void setConfirmationCode(Integer confirmationCode) {
+        this.confirmationCode = confirmationCode;
     }
 }

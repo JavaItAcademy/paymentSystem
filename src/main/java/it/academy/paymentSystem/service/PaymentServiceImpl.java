@@ -25,4 +25,16 @@ public class PaymentServiceImpl implements PaymentService{
     public Payment getPaymentById(Long id) {
         return this.paymentRepository.findById(id).get();
     }
+
+    @Override
+    public boolean confirmPayment(Long id, Integer confirmationCode) {
+        Payment p = getPaymentById(id);
+        if (p == null) return false;
+        if (p.getConfirmationCode().equals(confirmationCode)) {
+            p.setStatus("OK");
+            this.paymentRepository.save(p);
+            return true;
+        }
+        return false;
+    }
 }

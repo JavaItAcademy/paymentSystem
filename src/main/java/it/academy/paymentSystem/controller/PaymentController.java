@@ -31,5 +31,40 @@ public class PaymentController {
         return paymentService.addPayment(c);
     }
 
+    @PostMapping("/confirm")
+    @ResponseStatus(HttpStatus.OK)
+    private boolean confirmPayment(@RequestBody Confirmation confirmation){
+        return paymentService.confirmPayment(confirmation.getId(), confirmation.getConfirmationCode());
+    }
 
+
+}
+
+class Confirmation{
+    private Long id;
+    private Integer confirmationCode;
+
+    public Confirmation(Long id, Integer confirmationCode) {
+        this.id = id;
+        this.confirmationCode = confirmationCode;
+    }
+
+    public Confirmation() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    public void setConfirmationCode(Integer confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
 }
