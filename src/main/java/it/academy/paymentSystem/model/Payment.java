@@ -1,5 +1,7 @@
 package it.academy.paymentSystem.model;
 
+import it.academy.paymentSystem.enums.Status;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,7 +14,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+
+    //private String status;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 
     private BigDecimal amount;
 
@@ -27,14 +33,23 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(Long id, String status, BigDecimal amount, Client client) {
+    public Payment(Long id, Status status, BigDecimal amount, Integer confirmationCode, Client client, LocalDateTime time) {
         this.id = id;
         this.status = status;
         this.amount = amount;
+        this.confirmationCode = confirmationCode;
         this.client = client;
-
-        this.time = LocalDateTime.now();
+        this.time = time;
     }
+
+    //    public Payment(Long id, String status, BigDecimal amount, Client client) {
+//        this.id = id;
+//        this.status = status;
+//        this.amount = amount;
+//        this.client = client;
+//
+//        this.time = LocalDateTime.now();
+//    }
 
     public Payment(BigDecimal amount, Client client) {
         this.amount = amount;
@@ -47,10 +62,10 @@ public class Payment {
 
             this.confirmationCode = r.nextInt(9000) + 1000;
             System.out.println(confirmationCode);
-            this.status = "AWAITING_CONFIRMATION";
+            this.status = Status.AWAITING_CONFIRMATION;
         }
         else {
-            this.status = "ERROR";
+            this.status = Status.ERROR;
         }
     }
 
@@ -62,11 +77,20 @@ public class Payment {
         this.id = id;
     }
 
-    public String getStatus() {
+//    public String getStatus() {
+//        return status;
+//    }
+
+//    public void setStatus(String status) {
+//        this.status = status;
+//    }
+
+
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

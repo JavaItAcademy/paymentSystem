@@ -1,6 +1,7 @@
 package it.academy.paymentSystem.service;
 
 import it.academy.paymentSystem.model.Payment;
+import it.academy.paymentSystem.enums.Status;
 import it.academy.paymentSystem.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService{
         Payment p = getPaymentById(id);
         if (p == null) return false;
         if (p.getConfirmationCode().equals(confirmationCode)) {
-            p.setStatus("OK");
+            p.setStatus(Status.OK);
             this.paymentRepository.save(p);
             return true;
         }
