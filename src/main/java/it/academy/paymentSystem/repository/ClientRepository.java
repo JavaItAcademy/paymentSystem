@@ -12,7 +12,8 @@ import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query(value = "select sum(p.amount) from Payment " +
-            "p inner join p.client c where c.id = :client_id")
+            "p inner join p.client c where c.id = :client_id " +
+            "and p.status <> it.academy.paymentSystem.enums.Status.ERROR")
     BigDecimal getSumPayments(@Param("client_id") Long client_id);
 
     @Query(value = "select p from Payment " +
