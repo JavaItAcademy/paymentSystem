@@ -1,9 +1,5 @@
 package it.academy.paymentSystem.model;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
-
-//@XmlSeeAlso({Client.class,
-//        Payment.class})
 public class Response {
     private boolean success;
     private String message;

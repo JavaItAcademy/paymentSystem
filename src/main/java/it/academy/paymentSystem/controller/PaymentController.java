@@ -37,7 +37,10 @@ public class PaymentController {
     @ResponseStatus(HttpStatus.OK)
     private Response confirmPayment(@RequestBody Confirmation confirmation){
         try{
-            return new Response(paymentService.confirmPayment(confirmation.getId(), confirmation.getConfirmationCode()), "Successfully confirmed", this.getOnePayment(confirmation.getId()));
+            return new Response(
+                    paymentService.confirmPayment(confirmation.getId(), confirmation.getConfirmationCode()),
+                    "Successfully confirmed",
+                    this.getOnePayment(confirmation.getId()));
 
         } catch (Exception ex) {
             return new Response(false, ex.toString(), null);

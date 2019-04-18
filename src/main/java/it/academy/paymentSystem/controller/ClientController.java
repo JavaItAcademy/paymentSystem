@@ -1,6 +1,7 @@
 package it.academy.paymentSystem.controller;
 
 import it.academy.paymentSystem.model.Client;
+import it.academy.paymentSystem.model.Payment;
 import it.academy.paymentSystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,15 @@ public class ClientController {
     @GetMapping("/{id}/sum")
     private BigDecimal getSum(@PathVariable Long id){
         return clientService.getSumPayments(id);
+    }
+
+    @GetMapping("/{id}/payments")
+    private List<Payment> getPayments(@PathVariable Long id){
+        return clientService.getClientPayments(id);
+    }
+    @GetMapping("/{id}/okPayments")
+    private List<Payment> getOkPayments(@PathVariable Long id){
+        return clientService.getOkPayments(id);
     }
 
     @PostMapping
