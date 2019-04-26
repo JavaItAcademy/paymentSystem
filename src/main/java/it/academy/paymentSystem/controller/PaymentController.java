@@ -17,14 +17,15 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping
-    private List<Payment> getAllPayments(){
-        return paymentService.getAllPayments();
+    //TODO add Response as return object
+    @GetMapping("/client/{id}")
+    private List<Payment> getAllPayments(@PathVariable Long id, @RequestHeader String passCode){
+        return paymentService.getAllPayments(id, passCode);
     }
 
     @GetMapping("/{id}")
-    private Payment getOnePayment(@PathVariable Long id){
-        return paymentService.getPaymentById(id);
+    private Payment getOnePayment(@PathVariable Long id, @RequestHeader String passCode){
+        return paymentService.getPaymentById(id, passCode);
     }
 
     @PostMapping
@@ -35,12 +36,12 @@ public class PaymentController {
 
     @PostMapping("/confirm")
     @ResponseStatus(HttpStatus.OK)
-    private Response confirmPayment(@RequestBody Confirmation confirmation){
+    private Response confirmPayment(@RequestBody Confirmation confirmation, @RequestHeader String passCode){
         try{
             return new Response(
                     paymentService.confirmPayment(confirmation.getId(), confirmation.getConfirmationCode()),
                     "Successfully confirmed",
-                    this.getOnePayment(confirmation.getId()));
+                    this.getOnePayment(confirmation.getId(), passCode));
 
         } catch (Exception ex) {
             return new Response(false, ex.toString(), null);

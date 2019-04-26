@@ -8,6 +8,7 @@ import java.util.List;
 public interface PaymentService {
     Payment addPayment(Payment p);
     List<Payment> getAllPayments();
-    Payment getPaymentById(Long id);
+    List<Payment> getAllPayments(Long id, String passCode);
+    Payment getPaymentById(Long id, String passCode);
     boolean confirmPayment(Long id, Integer confirmationCode);
 }

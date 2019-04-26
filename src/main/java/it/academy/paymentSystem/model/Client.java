@@ -1,5 +1,7 @@
 package it.academy.paymentSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,9 @@ public class Client {
 
     private boolean inactive;
 
+    @JsonIgnore
+    private String password;
+
     public Client(Long id, String phoneNo, String fio, boolean inactive) {
         this.id = id;
         this.phoneNo = phoneNo;
@@ -24,7 +29,23 @@ public class Client {
         this.inactive = inactive;
     }
 
+    public Client(Long id, String phoneNo, String fio, boolean inactive, String password) {
+        this.id = id;
+        this.phoneNo = phoneNo;
+        this.fio = fio;
+        this.inactive = inactive;
+        this.password = password;
+    }
+
     public Client() { }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

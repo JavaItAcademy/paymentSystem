@@ -25,6 +25,7 @@ public class Bootstrap implements CommandLineRunner {
         c1.setFio("Pikachu");
         c1.setInactive(false);
         c1.setPhoneNo("0312");
+        c1.setPassword("123");
 
         clientService.addClient(c1);
 
